@@ -1,0 +1,183 @@
+{
+    "esasim": {
+        "kind": "blueprint",
+        "flow_id": 17
+    },
+    "name": "3 · Same step, any accelerator",
+    "description": "The same images embedded on the CPU and on the NVIDIA GPU, images per second side by side (add a Tenstorrent machine for the third).",
+    "published_version": 0,
+    "updated": "2026-11-08 14:24:15",
+    "graph": {
+        "nodes": [
+            {
+                "id": "hf",
+                "type": "hf-dataset",
+                "x": 0,
+                "y": 160,
+                "params": {
+                    "repo": "imageomics/GZCD",
+                    "revision": "main",
+                    "keep": "images/*.jpg",
+                    "also": "",
+                    "max_files": 300,
+                    "seed": 1,
+                    "repo_type": "dataset",
+                    "token": ""
+                },
+                "title": "GZCD on Hugging Face (300 photos)"
+            },
+            {
+                "id": "cpu",
+                "type": "embed-images",
+                "x": 420,
+                "y": -20,
+                "params": {
+                    "model": "CLIP ViT-B/32",
+                    "accelerator": "CPU",
+                    "batch": 32,
+                    "prompts": ""
+                },
+                "title": "Embed on the CPU"
+            },
+            {
+                "id": "gpu",
+                "type": "embed-images",
+                "x": 420,
+                "y": 340,
+                "params": {
+                    "model": "CLIP ViT-B/32",
+                    "accelerator": "NVIDIA GPU",
+                    "batch": 64,
+                    "prompts": ""
+                },
+                "title": "Embed on the NVIDIA GPU"
+            },
+            {
+                "id": "tcpu",
+                "type": "telemetry",
+                "x": 820,
+                "y": -20,
+                "params": {
+                    "interval": 0.5,
+                    "channels": "embed",
+                    "keep": 600
+                },
+                "title": "CPU speed"
+            },
+            {
+                "id": "tgpu",
+                "type": "telemetry",
+                "x": 820,
+                "y": 340,
+                "params": {
+                    "interval": 0.5,
+                    "channels": "embed",
+                    "keep": 600
+                },
+                "title": "GPU speed"
+            },
+            {
+                "id": "gcpu",
+                "type": "gauge-view",
+                "x": 1220,
+                "y": -20,
+                "params": {
+                    "fields": "images_s",
+                    "style": "dial",
+                    "min": 0,
+                    "max": 400,
+                    "unit": "img/s",
+                    "decimals": 0
+                },
+                "title": "CPU: images per second"
+            },
+            {
+                "id": "ggpu",
+                "type": "gauge-view",
+                "x": 1220,
+                "y": 340,
+                "params": {
+                    "fields": "images_s",
+                    "style": "dial",
+                    "min": 0,
+                    "max": 400,
+                    "unit": "img/s",
+                    "decimals": 0
+                },
+                "title": "NVIDIA GPU: images per second"
+            }
+        ],
+        "edges": [
+            {
+                "id": "hf.files>cpu.images",
+                "from": {
+                    "node": "hf",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "cpu",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "hf.files>gpu.images",
+                "from": {
+                    "node": "hf",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "gpu",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "cpu.telemetry>tcpu.from",
+                "from": {
+                    "node": "cpu",
+                    "port": "telemetry"
+                },
+                "to": {
+                    "node": "tcpu",
+                    "port": "from"
+                }
+            },
+            {
+                "id": "gpu.telemetry>tgpu.from",
+                "from": {
+                    "node": "gpu",
+                    "port": "telemetry"
+                },
+                "to": {
+                    "node": "tgpu",
+                    "port": "from"
+                }
+            },
+            {
+                "id": "tcpu.stream>gcpu.data",
+                "from": {
+                    "node": "tcpu",
+                    "port": "stream"
+                },
+                "to": {
+                    "node": "gcpu",
+                    "port": "data"
+                }
+            },
+            {
+                "id": "tgpu.stream>ggpu.data",
+                "from": {
+                    "node": "tgpu",
+                    "port": "stream"
+                },
+                "to": {
+                    "node": "ggpu",
+                    "port": "data"
+                }
+            }
+        ],
+        "notes": [],
+        "dash": {
+            "items": []
+        }
+    }
+}

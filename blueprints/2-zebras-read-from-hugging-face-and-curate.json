@@ -1,0 +1,359 @@
+{
+    "esasim": {
+        "kind": "blueprint",
+        "flow_id": 16
+    },
+    "name": "2 · Zebras: read from Hugging Face and curate",
+    "description": "A sample of GZCD (Grevy's zebras, Kenya) read at an exact commit, checked, de-duplicated and sorted by CLIP into zebras, giraffes and empty frames.",
+    "published_version": 0,
+    "updated": "2026-11-08 14:35:22",
+    "graph": {
+        "nodes": [
+            {
+                "id": "hf",
+                "type": "hf-dataset",
+                "x": 0,
+                "y": 160,
+                "params": {
+                    "repo": "imageomics/GZCD",
+                    "revision": "main",
+                    "keep": "images/*.jpg",
+                    "also": "final_metadata.json",
+                    "max_files": 300,
+                    "seed": 1,
+                    "repo_type": "dataset",
+                    "token": ""
+                },
+                "title": "GZCD on Hugging Face (300 photos)"
+            },
+            {
+                "id": "q",
+                "type": "image-quality",
+                "x": 420,
+                "y": -40,
+                "params": {
+                    "min_side": 224,
+                    "blur": 25,
+                    "dark": 60,
+                    "bright": 60,
+                    "contrast": 8
+                },
+                "title": "Image quality check"
+            },
+            {
+                "id": "emb",
+                "type": "embed-images",
+                "x": 420,
+                "y": 300,
+                "params": {
+                    "model": "CLIP ViT-B/32",
+                    "accelerator": "auto",
+                    "batch": 32,
+                    "prompts": "a zebra, a giraffe, an empty landscape, people or a vehicle"
+                },
+                "title": "Embed images (CLIP, zero-shot)"
+            },
+            {
+                "id": "dup",
+                "type": "find-duplicates",
+                "x": 820,
+                "y": 176,
+                "params": {
+                    "distance": 6,
+                    "similarity": 0.97
+                },
+                "title": "Find duplicates"
+            },
+            {
+                "id": "map",
+                "type": "embedding-map",
+                "x": 820,
+                "y": 420,
+                "params": {
+                    "method": "auto",
+                    "neighbours": 15,
+                    "seed": 1
+                },
+                "title": "Embedding map"
+            },
+            {
+                "id": "cur",
+                "type": "curate-split",
+                "x": 1220,
+                "y": 60,
+                "params": {
+                    "remove": "",
+                    "val_pct": 20,
+                    "max_per_class": 0,
+                    "layout": "split/class",
+                    "seed": 1
+                },
+                "title": "Curate and split"
+            },
+            {
+                "id": "zs",
+                "type": "table-view",
+                "x": 1220,
+                "y": 420,
+                "params": {
+                    "rows": 50
+                },
+                "title": "What CLIP sees in each photo"
+            },
+            {
+                "id": "report",
+                "type": "text-view",
+                "x": 1640,
+                "y": -200,
+                "params": {
+                    "monospace": false
+                },
+                "title": "Curation report"
+            },
+            {
+                "id": "reasons",
+                "type": "chart",
+                "x": 1640,
+                "y": 80,
+                "params": {
+                    "kind": "bars",
+                    "x": "reason",
+                    "y": "images"
+                },
+                "title": "Removed, by reason"
+            },
+            {
+                "id": "mapchart",
+                "type": "chart",
+                "x": 1640,
+                "y": 380,
+                "params": {
+                    "kind": "points",
+                    "x": "x",
+                    "y": "y"
+                },
+                "title": "Embedding map"
+            },
+            {
+                "id": "tel",
+                "type": "telemetry",
+                "x": 820,
+                "y": 700,
+                "params": {
+                    "interval": 0.5,
+                    "channels": "embed",
+                    "keep": 600
+                },
+                "title": "Embedding speed"
+            },
+            {
+                "id": "speed",
+                "type": "gauge-view",
+                "x": 1220,
+                "y": 720,
+                "params": {
+                    "fields": "images_s",
+                    "style": "dial",
+                    "min": 0,
+                    "max": 500,
+                    "unit": "img/s",
+                    "decimals": 0
+                },
+                "title": "Images per second"
+            }
+        ],
+        "edges": [
+            {
+                "id": "hf.files>q.images",
+                "from": {
+                    "node": "hf",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "q",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "hf.files>emb.images",
+                "from": {
+                    "node": "hf",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "emb",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "hf.files>dup.images",
+                "from": {
+                    "node": "hf",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "dup",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "q.table>dup.quality",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "dup",
+                    "port": "quality"
+                }
+            },
+            {
+                "id": "emb.embeddings>dup.embeddings",
+                "from": {
+                    "node": "emb",
+                    "port": "embeddings"
+                },
+                "to": {
+                    "node": "dup",
+                    "port": "embeddings"
+                }
+            },
+            {
+                "id": "emb.embeddings>map.embeddings",
+                "from": {
+                    "node": "emb",
+                    "port": "embeddings"
+                },
+                "to": {
+                    "node": "map",
+                    "port": "embeddings"
+                }
+            },
+            {
+                "id": "q.table>map.flags",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "map",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "dup.table>map.flags",
+                "from": {
+                    "node": "dup",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "map",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "hf.files>cur.images",
+                "from": {
+                    "node": "hf",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "cur",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "q.table>cur.flags",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "cur",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "dup.table>cur.flags",
+                "from": {
+                    "node": "dup",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "cur",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "emb.table>zs.data",
+                "from": {
+                    "node": "emb",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "zs",
+                    "port": "data"
+                }
+            },
+            {
+                "id": "cur.report>report.text",
+                "from": {
+                    "node": "cur",
+                    "port": "report"
+                },
+                "to": {
+                    "node": "report",
+                    "port": "text"
+                }
+            },
+            {
+                "id": "cur.report>reasons.data",
+                "from": {
+                    "node": "cur",
+                    "port": "report"
+                },
+                "to": {
+                    "node": "reasons",
+                    "port": "data"
+                }
+            },
+            {
+                "id": "map.map>mapchart.data",
+                "from": {
+                    "node": "map",
+                    "port": "map"
+                },
+                "to": {
+                    "node": "mapchart",
+                    "port": "data"
+                }
+            },
+            {
+                "id": "emb.telemetry>tel.from",
+                "from": {
+                    "node": "emb",
+                    "port": "telemetry"
+                },
+                "to": {
+                    "node": "tel",
+                    "port": "from"
+                }
+            },
+            {
+                "id": "tel.stream>speed.data",
+                "from": {
+                    "node": "tel",
+                    "port": "stream"
+                },
+                "to": {
+                    "node": "speed",
+                    "port": "data"
+                }
+            }
+        ],
+        "notes": [],
+        "dash": {
+            "items": []
+        }
+    }
+}
