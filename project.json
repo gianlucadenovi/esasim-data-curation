@@ -18,7 +18,7 @@
         {
             "name": "2 · Zebras: read from Hugging Face and curate",
             "file": "blueprints/2-zebras-read-from-hugging-face-and-curate.json",
-            "published_version": 0,
+            "published_version": 1,
             "nodes": 14
         },
         {

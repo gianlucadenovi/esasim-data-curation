@@ -51,7 +51,7 @@ An [EsaSim](https://esacode.com/) project of the workspace Gianluca De Novi's wo
 ### Blueprints in this repository
 
 - [1 · Fruit: download and curate](blueprints/1-fruit-download-and-curate.json) · 15 blocks · version 5
-- [2 · Zebras: read from Hugging Face and curate](blueprints/2-zebras-read-from-hugging-face-and-curate.json) · 14 blocks
+- [2 · Zebras: read from Hugging Face and curate](blueprints/2-zebras-read-from-hugging-face-and-curate.json) · 14 blocks · version 1
 - [3 · Same step, any accelerator](blueprints/3-same-step-any-accelerator.json) · 7 blocks
 
 Keys pasted in blocks (secret settings) are not saved here. Datasets, results and the team stay in EsaSim.
