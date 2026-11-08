@@ -6,7 +6,7 @@
     "name": "1 · Fruit: download and curate",
     "description": "FruitNet (Good / Bad / Mixed quality of 6 fruits) downloaded once, checked, de-duplicated, labels checked with CLIP, split and reported.",
     "published_version": 3,
-    "updated": "2026-11-08 16:04:38",
+    "updated": "2026-11-08 16:15:53",
     "graph": {
         "nodes": [
             {
