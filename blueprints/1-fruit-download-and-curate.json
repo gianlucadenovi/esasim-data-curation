@@ -5,8 +5,8 @@
     },
     "name": "1 · Fruit: download and curate",
     "description": "FruitNet (Good / Bad / Mixed quality of 6 fruits) downloaded once, checked, de-duplicated, labels checked with CLIP, split and reported.",
-    "published_version": 1,
-    "updated": "2026-11-08 14:38:08",
+    "published_version": 2,
+    "updated": "2026-11-08 14:55:23",
     "graph": {
         "nodes": [
             {
@@ -44,7 +44,7 @@
                 "id": "emb",
                 "type": "embed-images",
                 "x": 340,
-                "y": 486,
+                "y": 551,
                 "params": {
                     "model": "CLIP ViT-B/32",
                     "accelerator": "auto",
@@ -150,7 +150,7 @@
                 "id": "tel",
                 "type": "telemetry",
                 "x": 700,
-                "y": 660,
+                "y": 731,
                 "params": {
                     "interval": 0.5,
                     "channels": "embed",
@@ -398,7 +398,38 @@
         ],
         "notes": [],
         "dash": {
-            "items": []
+            "items": {
+                "report": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 6,
+                    "h": 7
+                },
+                "reasons": {
+                    "x": 6,
+                    "y": 0,
+                    "w": 6,
+                    "h": 7
+                },
+                "removed": {
+                    "x": 0,
+                    "y": 7,
+                    "w": 6,
+                    "h": 7
+                },
+                "mapchart": {
+                    "x": 6,
+                    "y": 7,
+                    "w": 6,
+                    "h": 7
+                },
+                "speed": {
+                    "x": 0,
+                    "y": 14,
+                    "w": 4,
+                    "h": 5
+                }
+            }
         }
     }
 }

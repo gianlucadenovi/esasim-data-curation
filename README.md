@@ -30,7 +30,7 @@ An [EsaSim](https://esacode.com/) project of the workspace Gianluca De Novi's wo
 
 ### Blueprints in this repository
 
-- [1 · Fruit: download and curate](blueprints/1-fruit-download-and-curate.json) · 13 blocks · version 1
+- [1 · Fruit: download and curate](blueprints/1-fruit-download-and-curate.json) · 13 blocks · version 2
 - [2 · Zebras: read from Hugging Face and curate](blueprints/2-zebras-read-from-hugging-face-and-curate.json) · 12 blocks
 - [3 · Same step, any accelerator](blueprints/3-same-step-any-accelerator.json) · 7 blocks
 
