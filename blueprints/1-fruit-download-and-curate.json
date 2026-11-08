@@ -1,0 +1,404 @@
+{
+    "esasim": {
+        "kind": "blueprint",
+        "flow_id": 15
+    },
+    "name": "1 · Fruit: download and curate",
+    "description": "FruitNet (Good / Bad / Mixed quality of 6 fruits) downloaded once, checked, de-duplicated, labels checked with CLIP, split and reported.",
+    "published_version": 1,
+    "updated": "2026-11-08 14:38:08",
+    "graph": {
+        "nodes": [
+            {
+                "id": "dl",
+                "type": "download-files",
+                "x": -20,
+                "y": 160,
+                "params": {
+                    "sources": "https://data.mendeley.com/datasets/b6fftwbr2v/3",
+                    "keep": "*.jpg, *.jpeg, *.png",
+                    "inside": "",
+                    "per_folder": 60,
+                    "max_files": 0,
+                    "seed": 1,
+                    "licence": "CC-BY-4.0",
+                    "credit": "Meshram, V., Patil, K. (2022). FruitNet: Indian fruits image dataset with quality for machine learning applications. Data in Brief 40, 107686. Mendeley Data, doi:10.17632/b6fftwbr2v.3"
+                },
+                "title": "FruitNet (Mendeley Data)"
+            },
+            {
+                "id": "q",
+                "type": "image-quality",
+                "x": 340,
+                "y": -200,
+                "params": {
+                    "min_side": 224,
+                    "blur": 25,
+                    "dark": 60,
+                    "bright": 60,
+                    "contrast": 8
+                },
+                "title": "Image quality check"
+            },
+            {
+                "id": "emb",
+                "type": "embed-images",
+                "x": 340,
+                "y": 486,
+                "params": {
+                    "model": "CLIP ViT-B/32",
+                    "accelerator": "auto",
+                    "batch": 32,
+                    "prompts": ""
+                },
+                "title": "Embed images (CLIP)"
+            },
+            {
+                "id": "dup",
+                "type": "find-duplicates",
+                "x": 700,
+                "y": -94,
+                "params": {
+                    "distance": 6,
+                    "similarity": 0.97
+                },
+                "title": "Find duplicates"
+            },
+            {
+                "id": "lab",
+                "type": "check-labels",
+                "x": 700,
+                "y": 320,
+                "params": {
+                    "neighbours": 10,
+                    "agreement": 30,
+                    "outliers": 1
+                },
+                "title": "Check labels"
+            },
+            {
+                "id": "map",
+                "type": "embedding-map",
+                "x": 1220,
+                "y": 498,
+                "params": {
+                    "method": "auto",
+                    "neighbours": 15,
+                    "seed": 1
+                },
+                "title": "Embedding map"
+            },
+            {
+                "id": "cur",
+                "type": "curate-split",
+                "x": 1220,
+                "y": 136,
+                "params": {
+                    "remove": "",
+                    "val_pct": 20,
+                    "max_per_class": 0,
+                    "layout": "split/class",
+                    "seed": 1
+                },
+                "title": "Curate and split"
+            },
+            {
+                "id": "report",
+                "type": "text-view",
+                "x": 1640,
+                "y": 136,
+                "params": {
+                    "monospace": false
+                },
+                "title": "Curation report"
+            },
+            {
+                "id": "reasons",
+                "type": "chart",
+                "x": 1640,
+                "y": 336,
+                "params": {
+                    "kind": "bars",
+                    "x": "reason",
+                    "y": "images"
+                },
+                "title": "Removed, by reason"
+            },
+            {
+                "id": "removed",
+                "type": "table-view",
+                "x": 1640,
+                "y": -60,
+                "params": {
+                    "rows": 50
+                },
+                "title": "Every image removed, and why"
+            },
+            {
+                "id": "mapchart",
+                "type": "chart",
+                "x": 1640,
+                "y": 586,
+                "params": {
+                    "kind": "points",
+                    "x": "x",
+                    "y": "y"
+                },
+                "title": "Embedding map: images that look alike sit together"
+            },
+            {
+                "id": "tel",
+                "type": "telemetry",
+                "x": 700,
+                "y": 660,
+                "params": {
+                    "interval": 0.5,
+                    "channels": "embed",
+                    "keep": 600
+                },
+                "title": "Embedding speed"
+            },
+            {
+                "id": "speed",
+                "type": "gauge-view",
+                "x": 1220,
+                "y": 760,
+                "params": {
+                    "fields": "images_s",
+                    "style": "dial",
+                    "min": 0,
+                    "max": 500,
+                    "unit": "img/s",
+                    "decimals": 0
+                },
+                "title": "Images per second"
+            }
+        ],
+        "edges": [
+            {
+                "id": "dl.files>q.images",
+                "from": {
+                    "node": "dl",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "q",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "dl.files>emb.images",
+                "from": {
+                    "node": "dl",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "emb",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "dl.files>dup.images",
+                "from": {
+                    "node": "dl",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "dup",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "q.table>dup.quality",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "dup",
+                    "port": "quality"
+                }
+            },
+            {
+                "id": "emb.embeddings>dup.embeddings",
+                "from": {
+                    "node": "emb",
+                    "port": "embeddings"
+                },
+                "to": {
+                    "node": "dup",
+                    "port": "embeddings"
+                }
+            },
+            {
+                "id": "emb.embeddings>lab.embeddings",
+                "from": {
+                    "node": "emb",
+                    "port": "embeddings"
+                },
+                "to": {
+                    "node": "lab",
+                    "port": "embeddings"
+                }
+            },
+            {
+                "id": "emb.embeddings>map.embeddings",
+                "from": {
+                    "node": "emb",
+                    "port": "embeddings"
+                },
+                "to": {
+                    "node": "map",
+                    "port": "embeddings"
+                }
+            },
+            {
+                "id": "q.table>map.flags",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "map",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "dup.table>map.flags",
+                "from": {
+                    "node": "dup",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "map",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "lab.table>map.flags",
+                "from": {
+                    "node": "lab",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "map",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "dl.files>cur.images",
+                "from": {
+                    "node": "dl",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "cur",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "q.table>cur.flags",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "cur",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "dup.table>cur.flags",
+                "from": {
+                    "node": "dup",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "cur",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "lab.table>cur.flags",
+                "from": {
+                    "node": "lab",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "cur",
+                    "port": "flags"
+                }
+            },
+            {
+                "id": "cur.report>report.text",
+                "from": {
+                    "node": "cur",
+                    "port": "report"
+                },
+                "to": {
+                    "node": "report",
+                    "port": "text"
+                }
+            },
+            {
+                "id": "cur.report>reasons.data",
+                "from": {
+                    "node": "cur",
+                    "port": "report"
+                },
+                "to": {
+                    "node": "reasons",
+                    "port": "data"
+                }
+            },
+            {
+                "id": "cur.removed>removed.data",
+                "from": {
+                    "node": "cur",
+                    "port": "removed"
+                },
+                "to": {
+                    "node": "removed",
+                    "port": "data"
+                }
+            },
+            {
+                "id": "map.map>mapchart.data",
+                "from": {
+                    "node": "map",
+                    "port": "map"
+                },
+                "to": {
+                    "node": "mapchart",
+                    "port": "data"
+                }
+            },
+            {
+                "id": "emb.telemetry>tel.from",
+                "from": {
+                    "node": "emb",
+                    "port": "telemetry"
+                },
+                "to": {
+                    "node": "tel",
+                    "port": "from"
+                }
+            },
+            {
+                "id": "tel.stream>speed.data",
+                "from": {
+                    "node": "tel",
+                    "port": "stream"
+                },
+                "to": {
+                    "node": "speed",
+                    "port": "data"
+                }
+            }
+        ],
+        "notes": [],
+        "dash": {
+            "items": []
+        }
+    }
+}
