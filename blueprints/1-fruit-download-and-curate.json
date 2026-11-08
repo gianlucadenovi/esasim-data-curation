@@ -5,8 +5,8 @@
     },
     "name": "1 · Fruit: download and curate",
     "description": "FruitNet (Good / Bad / Mixed quality of 6 fruits) downloaded once, checked, de-duplicated, labels checked with CLIP, split and reported.",
-    "published_version": 2,
-    "updated": "2026-11-08 14:55:23",
+    "published_version": 3,
+    "updated": "2026-11-08 16:04:38",
     "graph": {
         "nodes": [
             {
@@ -16,6 +16,7 @@
                 "y": 160,
                 "params": {
                     "sources": "https://data.mendeley.com/datasets/b6fftwbr2v/3",
+                    "fetch": "*.zip",
                     "keep": "*.jpg, *.jpeg, *.png",
                     "inside": "",
                     "per_folder": 60,
