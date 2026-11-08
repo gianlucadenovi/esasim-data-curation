@@ -6,7 +6,7 @@
     "name": "2 · Zebras: read from Hugging Face and curate",
     "description": "A sample of GZCD (Grevy's zebras, Kenya) read at an exact commit, checked, de-duplicated and sorted by CLIP into zebras, giraffes and empty frames.",
     "published_version": 0,
-    "updated": "2026-11-08 16:22:15",
+    "updated": "2026-11-08 19:23:57",
     "graph": {
         "nodes": [
             {
@@ -89,6 +89,30 @@
                     "seed": 1
                 },
                 "title": "Curate and split"
+            },
+            {
+                "id": "pv",
+                "type": "image-previews",
+                "x": 1220,
+                "y": -280,
+                "params": {
+                    "show": "all",
+                    "sample_ok": 0,
+                    "size": 256,
+                    "max": 600,
+                    "seed": 1
+                },
+                "title": "Previews of every photo"
+            },
+            {
+                "id": "rv",
+                "type": "review-grid",
+                "x": 1640,
+                "y": -520,
+                "params": {
+                    "size": "medium"
+                },
+                "title": "Review the photos (with what CLIP sees)"
             },
             {
                 "id": "zs",
@@ -285,6 +309,61 @@
                 }
             },
             {
+                "id": "hf.files>pv.images",
+                "from": {
+                    "node": "hf",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "q.table>pv.tables",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "tables"
+                }
+            },
+            {
+                "id": "dup.table>pv.tables",
+                "from": {
+                    "node": "dup",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "tables"
+                }
+            },
+            {
+                "id": "emb.table>pv.tables",
+                "from": {
+                    "node": "emb",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "tables"
+                }
+            },
+            {
+                "id": "pv.previews>rv.previews",
+                "from": {
+                    "node": "pv",
+                    "port": "previews"
+                },
+                "to": {
+                    "node": "rv",
+                    "port": "previews"
+                }
+            },
+            {
                 "id": "emb.table>zs.data",
                 "from": {
                     "node": "emb",
@@ -353,7 +432,38 @@
         ],
         "notes": [],
         "dash": {
-            "items": []
+            "items": {
+                "zs": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 6,
+                    "h": 7
+                },
+                "report": {
+                    "x": 6,
+                    "y": 0,
+                    "w": 6,
+                    "h": 7
+                },
+                "reasons": {
+                    "x": 0,
+                    "y": 7,
+                    "w": 6,
+                    "h": 7
+                },
+                "mapchart": {
+                    "x": 6,
+                    "y": 7,
+                    "w": 6,
+                    "h": 7
+                },
+                "speed": {
+                    "x": 0,
+                    "y": 14,
+                    "w": 4,
+                    "h": 5
+                }
+            }
         }
     }
 }

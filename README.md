@@ -36,7 +36,7 @@ Fruit (FruitNet) and zebras (GZCD), same blocks.
 
 ## What you get
 
-- On the **View** page: *Curation report* (2 · Zebras: read from Hugging Face and curate), *Removed, by reason* (2 · Zebras: read from Hugging Face and curate), *Every image removed, and why* (1 · Fruit: download and curate), *Embedding map: images that look alike sit together* (1 · Fruit: download and curate), *Embedding speed* (2 · Zebras: read from Hugging Face and curate), *Images per second* (2 · Zebras: read from Hugging Face and curate), *What CLIP sees in each photo* (2 · Zebras: read from Hugging Face and curate), *Embedding map* (2 · Zebras: read from Hugging Face and curate), *CPU speed* (3 · Same step, any accelerator), *GPU speed* (3 · Same step, any accelerator), *CPU: images per second* (3 · Same step, any accelerator), *NVIDIA GPU: images per second* (3 · Same step, any accelerator).
+- On the **View** page: *Review the flagged images* (1 · Fruit: download and curate), *Curation report* (2 · Zebras: read from Hugging Face and curate), *Removed, by reason* (2 · Zebras: read from Hugging Face and curate), *Every image removed, and why* (1 · Fruit: download and curate), *Embedding map: images that look alike sit together* (1 · Fruit: download and curate), *Embedding speed* (2 · Zebras: read from Hugging Face and curate), *Images per second* (2 · Zebras: read from Hugging Face and curate), *Review the photos (with what CLIP sees)* (2 · Zebras: read from Hugging Face and curate), *What CLIP sees in each photo* (2 · Zebras: read from Hugging Face and curate), *Embedding map* (2 · Zebras: read from Hugging Face and curate), *CPU speed* (3 · Same step, any accelerator), *GPU speed* (3 · Same step, any accelerator).
 
 ## Data and licences
 
@@ -50,8 +50,8 @@ An [EsaSim](https://esacode.com/) project of the workspace Gianluca De Novi's wo
 
 ### Blueprints in this repository
 
-- [1 · Fruit: download and curate](blueprints/1-fruit-download-and-curate.json) · 13 blocks · version 4
-- [2 · Zebras: read from Hugging Face and curate](blueprints/2-zebras-read-from-hugging-face-and-curate.json) · 12 blocks
+- [1 · Fruit: download and curate](blueprints/1-fruit-download-and-curate.json) · 15 blocks · version 5
+- [2 · Zebras: read from Hugging Face and curate](blueprints/2-zebras-read-from-hugging-face-and-curate.json) · 14 blocks
 - [3 · Same step, any accelerator](blueprints/3-same-step-any-accelerator.json) · 7 blocks
 
 Keys pasted in blocks (secret settings) are not saved here. Datasets, results and the team stay in EsaSim.

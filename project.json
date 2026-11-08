@@ -12,14 +12,14 @@
         {
             "name": "1 · Fruit: download and curate",
             "file": "blueprints/1-fruit-download-and-curate.json",
-            "published_version": 4,
-            "nodes": 13
+            "published_version": 5,
+            "nodes": 15
         },
         {
             "name": "2 · Zebras: read from Hugging Face and curate",
             "file": "blueprints/2-zebras-read-from-hugging-face-and-curate.json",
             "published_version": 0,
-            "nodes": 12
+            "nodes": 14
         },
         {
             "name": "3 · Same step, any accelerator",

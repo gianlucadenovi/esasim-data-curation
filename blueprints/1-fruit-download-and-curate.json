@@ -5,8 +5,8 @@
     },
     "name": "1 · Fruit: download and curate",
     "description": "FruitNet (Good / Bad / Mixed quality of 6 fruits) downloaded once, checked, de-duplicated, labels checked with CLIP, split and reported.",
-    "published_version": 4,
-    "updated": "2026-11-08 16:22:05",
+    "published_version": 5,
+    "updated": "2026-11-08 19:24:50",
     "graph": {
         "nodes": [
             {
@@ -104,6 +104,30 @@
                 "title": "Curate and split"
             },
             {
+                "id": "pv",
+                "type": "image-previews",
+                "x": 1220,
+                "y": -300,
+                "params": {
+                    "show": "flagged",
+                    "sample_ok": 48,
+                    "size": 256,
+                    "max": 600,
+                    "seed": 1
+                },
+                "title": "Previews of the flagged images"
+            },
+            {
+                "id": "rv",
+                "type": "review-grid",
+                "x": 1640,
+                "y": -300,
+                "params": {
+                    "size": "medium"
+                },
+                "title": "Review the flagged images"
+            },
+            {
                 "id": "report",
                 "type": "text-view",
                 "x": 1640,
@@ -150,8 +174,8 @@
             {
                 "id": "tel",
                 "type": "telemetry",
-                "x": 700,
-                "y": 731,
+                "x": 800,
+                "y": 796,
                 "params": {
                     "interval": 0.5,
                     "channels": "embed",
@@ -162,8 +186,8 @@
             {
                 "id": "speed",
                 "type": "gauge-view",
-                "x": 1220,
-                "y": 760,
+                "x": 1260,
+                "y": 840,
                 "params": {
                     "fields": "images_s",
                     "style": "dial",
@@ -331,6 +355,61 @@
                 }
             },
             {
+                "id": "dl.files>pv.images",
+                "from": {
+                    "node": "dl",
+                    "port": "files"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "images"
+                }
+            },
+            {
+                "id": "q.table>pv.tables",
+                "from": {
+                    "node": "q",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "tables"
+                }
+            },
+            {
+                "id": "dup.table>pv.tables",
+                "from": {
+                    "node": "dup",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "tables"
+                }
+            },
+            {
+                "id": "lab.table>pv.tables",
+                "from": {
+                    "node": "lab",
+                    "port": "table"
+                },
+                "to": {
+                    "node": "pv",
+                    "port": "tables"
+                }
+            },
+            {
+                "id": "pv.previews>rv.previews",
+                "from": {
+                    "node": "pv",
+                    "port": "previews"
+                },
+                "to": {
+                    "node": "rv",
+                    "port": "previews"
+                }
+            },
+            {
                 "id": "cur.report>report.text",
                 "from": {
                     "node": "cur",
@@ -401,34 +480,40 @@
         "dash": {
             "items": {
                 "report": {
-                    "x": 0,
+                    "x": 2,
                     "y": 0,
-                    "w": 6,
-                    "h": 7
+                    "w": 4,
+                    "h": 5
                 },
                 "reasons": {
                     "x": 6,
-                    "y": 0,
+                    "y": 10,
                     "w": 6,
                     "h": 7
                 },
                 "removed": {
-                    "x": 0,
-                    "y": 7,
+                    "x": 6,
+                    "y": 17,
                     "w": 6,
                     "h": 7
                 },
                 "mapchart": {
                     "x": 6,
-                    "y": 7,
+                    "y": 0,
                     "w": 6,
-                    "h": 7
+                    "h": 10
                 },
                 "speed": {
                     "x": 0,
-                    "y": 14,
-                    "w": 4,
+                    "y": 0,
+                    "w": 2,
                     "h": 5
+                },
+                "rv": {
+                    "x": 0,
+                    "y": 5,
+                    "w": 6,
+                    "h": 19
                 }
             }
         }
