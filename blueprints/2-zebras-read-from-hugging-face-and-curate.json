@@ -6,7 +6,7 @@
     "name": "2 · Zebras: read from Hugging Face and curate",
     "description": "A sample of GZCD (Grevy's zebras, Kenya) read at an exact commit, checked, de-duplicated and sorted by CLIP into zebras, giraffes and empty frames.",
     "published_version": 0,
-    "updated": "2026-11-08 14:35:22",
+    "updated": "2026-11-08 16:22:15",
     "graph": {
         "nodes": [
             {
@@ -32,7 +32,7 @@
                 "x": 420,
                 "y": -40,
                 "params": {
-                    "min_side": 224,
+                    "min_side": 64,
                     "blur": 25,
                     "dark": 60,
                     "bright": 60,
