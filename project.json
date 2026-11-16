@@ -7,6 +7,8 @@
     "name": "Data curation",
     "description": "From a raw image pile to a training-ready dataset: quality, duplicates, embeddings on CPU / NVIDIA / Tenstorrent, label check, split and a before/after report. Fruit (FruitNet) and zebras (GZCD), same blocks.",
     "type": "curation",
+    "cover": "upload",
+    "cover_file": "assets/cover.jpg",
     "readme": null,
     "blueprints": [
         {
