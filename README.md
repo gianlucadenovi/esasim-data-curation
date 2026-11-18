@@ -26,17 +26,17 @@ Fruit (FruitNet) and zebras (GZCD), same blocks.
 
 ## What you need
 
-- A machine with the EsaSim worker (Project > Compute); it runs on any machine, faster with: NVIDIA GPU, Tenstorrent.
+- A computer with the EsaSim worker (Project > Compute); it runs on any worker, faster with: NVIDIA GPU, Tenstorrent.
 - Keys to paste in the blocks (kept encrypted, never saved to GitHub): **Token (private datasets only)** of *GZCD on Hugging Face (300 photos)* (2 · Zebras: read from Hugging Face and curate); **Token (private datasets only)** of *GZCD on Hugging Face (300 photos)* (3 · Same step, any accelerator).
 - Data it reads: [data.mendeley.com/datasets/b6fftwbr2v/3](https://data.mendeley.com/datasets/b6fftwbr2v/3), downloaded by *FruitNet (Mendeley Data)*; [imageomics/GZCD](https://huggingface.co/datasets/imageomics/GZCD) on the Hugging Face Hub, read by *GZCD on Hugging Face (300 photos)*.
 - Python packages, installed by the worker the first time: `requests`, `numpy`, `pillow`, `torch`, `transformers`, `huggingface_hub`.
 
 ## How to run it
 
-1. Under **Compute**, check that a machine is available for this project.
+1. Under **Compute**, check that a worker is available for this project.
 2. Open the flow under **Blueprint** and fill in the settings listed above.
-3. Press **Run**, choose the machine, and follow the run on the flow's **View** page.
-4. The files it made are under **Results**; they stay on the machine until you save or download them.
+3. Press **Run**, choose the worker, and follow the run on the flow's **View** page.
+4. The files it made are under **Results**; they stay on the worker until you save or download them.
 
 ## What you get
 
